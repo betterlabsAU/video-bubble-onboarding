@@ -1,0 +1,408 @@
+/* Video Bubble Onboarding — self-contained styles (no Tailwind, no build step).
+   Colours theme from --vbo-base / --vbo-soft / --vbo-deep (set per bubble),
+   with indigo fallbacks. Import once: `import "video-bubble-onboarding/styles.css"`. */
+
+.vbo-bubble {
+  position: fixed;
+  z-index: 2147483600;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  font-family:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  animation: vbo-rise 0.26s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.vbo-bubble:active {
+  cursor: grabbing;
+}
+
+.vbo-circle {
+  position: absolute;
+  inset: 5px;
+  overflow: hidden;
+  border-radius: 9999px;
+  background: #000;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+  box-shadow:
+    0 20px 45px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+.vbo-video {
+  display: block;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  cursor: pointer;
+  background: #000;
+}
+
+.vbo-play-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.25);
+  transition: background 0.15s ease;
+}
+.vbo-play-overlay:hover {
+  background: rgba(0, 0, 0, 0.35);
+}
+.vbo-play-badge {
+  display: flex;
+  height: 48px;
+  width: 48px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #1c1917;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* progress ring (svg) */
+.vbo-ring {
+  position: absolute;
+  inset: 0;
+  transform: rotate(-90deg);
+  pointer-events: none;
+}
+
+/* hover controls */
+.vbo-ctl {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: #fff;
+  color: #57534e;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+  border: none;
+  cursor: pointer;
+  opacity: 0;
+  transition:
+    opacity 0.15s ease,
+    color 0.15s ease;
+}
+.vbo-bubble:hover .vbo-ctl {
+  opacity: 1;
+}
+.vbo-ctl:hover {
+  color: #1c1917;
+}
+.vbo-close {
+  top: 2px;
+  right: 2px;
+  height: 28px;
+  width: 28px;
+}
+.vbo-mute {
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 28px;
+  width: 28px;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+/* title pill (above, on hover) */
+.vbo-title {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-bottom: 8px;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  border-radius: 9999px;
+  background: rgba(28, 25, 23, 0.92);
+  color: #fff;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+.vbo-bubble:hover .vbo-title {
+  opacity: 1;
+}
+
+/* multi-part stepper (below) */
+.vbo-stepper {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-top: 12px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  border-radius: 9999px;
+  border: 1px solid #e7e5e4;
+  background: rgba(255, 255, 255, 0.96);
+  padding: 4px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+.vbo-step-btn {
+  display: flex;
+  height: 24px;
+  width: 24px;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 9999px;
+  background: transparent;
+  color: #78716c;
+  cursor: pointer;
+}
+.vbo-step-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+.vbo-step-btn:not(:disabled):hover {
+  background: #f5f5f4;
+  color: #1c1917;
+}
+.vbo-step-count {
+  min-width: 34px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: #78716c;
+}
+.vbo-step-next {
+  display: flex;
+  height: 24px;
+  align-items: center;
+  gap: 2px;
+  border: none;
+  border-radius: 9999px;
+  padding: 0 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--vbo-base, #6366f1);
+  cursor: pointer;
+}
+.vbo-step-next:hover {
+  filter: brightness(1.1);
+}
+
+/* "Replay tour" pill */
+.vbo-replay {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 2147483600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 9999px;
+  border: 1px solid #e7e5e4;
+  background: rgba(255, 255, 255, 0.96);
+  padding: 8px 16px 8px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #57534e;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  font-family:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+.vbo-replay:hover {
+  color: #1c1917;
+}
+.vbo-replay svg {
+  color: var(--vbo-base, #6366f1);
+}
+
+/* neon comet */
+.vbo-neon {
+  position: absolute;
+  inset: -6px;
+  border-radius: 9999px;
+  background: conic-gradient(
+    from 0deg,
+    color-mix(in srgb, var(--vbo-base, #6366f1) 10%, transparent),
+    color-mix(in srgb, var(--vbo-base, #6366f1) 10%, transparent) 200deg,
+    var(--vbo-base, #6366f1) 262deg,
+    var(--vbo-soft, #a5b4fc) 312deg,
+    #fff 340deg,
+    color-mix(in srgb, var(--vbo-base, #6366f1) 10%, transparent) 360deg
+  );
+  filter: blur(7px);
+  opacity: 0.85;
+  pointer-events: none;
+  will-change: transform;
+  animation: vbo-neon-run 4.8s linear infinite;
+}
+.vbo-neon::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: 9999px;
+  background: conic-gradient(
+    from 180deg,
+    transparent,
+    transparent 270deg,
+    rgba(255, 255, 255, 0.7) 320deg,
+    transparent 360deg
+  );
+  filter: blur(3px);
+  opacity: 0.5;
+  animation: vbo-neon-run 3.2s linear infinite reverse;
+}
+
+/* highlight overlay (portal at document.body) */
+.vbo-hl-root {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483500;
+  pointer-events: none;
+}
+.vbo-hl-ring {
+  position: fixed;
+  border-radius: 12px;
+  border: 2px solid var(--vbo-base, #6366f1);
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--vbo-base, #6366f1) 25%, transparent),
+    0 0 22px 4px color-mix(in srgb, var(--vbo-base, #6366f1) 35%, transparent);
+  animation:
+    vbo-ring-pop 0.55s ease both,
+    vbo-pulse 1.6s ease-in-out 0.55s infinite;
+  transition:
+    top 0.18s ease,
+    left 0.18s ease,
+    width 0.18s ease,
+    height 0.18s ease;
+  pointer-events: none;
+}
+.vbo-hl-caption {
+  position: fixed;
+  max-width: 240px;
+  padding: 5px 11px;
+  border-radius: 9999px;
+  background: var(--vbo-deep, #312e81);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+  font-family:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  animation: vbo-fade-in 0.2s ease;
+}
+.vbo-click-ripple {
+  position: fixed;
+  border-radius: 9999px;
+  border: 2px solid color-mix(in srgb, var(--vbo-base, #6366f1) 60%, transparent);
+  background: color-mix(in srgb, var(--vbo-base, #6366f1) 12%, transparent);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  animation: vbo-click-ripple 0.7s ease-out both;
+}
+.vbo-click-cursor {
+  position: fixed;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.3));
+  animation: vbo-click-cursor 0.95s ease both;
+}
+
+@keyframes vbo-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+}
+@keyframes vbo-neon-run {
+  to {
+    transform: rotate(1turn);
+  }
+}
+@keyframes vbo-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 3px color-mix(in srgb, var(--vbo-base, #6366f1) 22%, transparent),
+      0 0 18px 3px color-mix(in srgb, var(--vbo-base, #6366f1) 30%, transparent);
+    border-color: var(--vbo-base, #6366f1);
+  }
+  50% {
+    box-shadow:
+      0 0 0 5px color-mix(in srgb, var(--vbo-base, #6366f1) 12%, transparent),
+      0 0 30px 8px color-mix(in srgb, var(--vbo-base, #6366f1) 45%, transparent);
+    border-color: var(--vbo-soft, #818cf8);
+  }
+}
+@keyframes vbo-ring-pop {
+  0% {
+    transform: scale(0.86);
+    opacity: 0.4;
+  }
+  45% {
+    transform: scale(1.06);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes vbo-click-ripple {
+  0% {
+    transform: translate(-50%, -50%) scale(0.32);
+    opacity: 0.55;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0;
+  }
+}
+@keyframes vbo-click-cursor {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translate(15px, 15px) scale(1);
+  }
+  32% {
+    opacity: 1;
+    transform: translate(-50%, -50%) translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) translate(0, 0) scale(0.78);
+  }
+  68% {
+    transform: translate(-50%, -50%) translate(0, 0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translate(3px, 3px) scale(1);
+  }
+}
+@keyframes vbo-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vbo-bubble,
+  .vbo-neon,
+  .vbo-neon::after,
+  .vbo-hl-ring,
+  .vbo-hl-caption {
+    animation: none;
+  }
+  .vbo-click-ripple,
+  .vbo-click-cursor {
+    display: none;
+  }
+}

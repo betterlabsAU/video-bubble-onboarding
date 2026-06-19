@@ -1,0 +1,38 @@
+[
+  {
+    "id": "welcome-dashboard",
+    "title": "Welcome — quick tour",
+    "videoUrl": "https://your-cdn.example.com/tours/welcome.mp4",
+    "trigger": { "type": "route", "path": "/", "match": "exact" },
+    "showAgain": false,
+    "accent": "indigo",
+    "size": "md",
+    "glow": true,
+    "autoplay": false,
+    "position": "br",
+    "steps": [
+      {
+        "id": "s1",
+        "selector": "[data-onb='new-project']",
+        "label": "Start a new project here",
+        "time": 4,
+        "hold": true
+      },
+      {
+        "id": "s2",
+        "selector": "[data-onb='search']",
+        "label": "Find anything fast",
+        "time": 9,
+        "hold": true
+      },
+      {
+        "id": "s3",
+        "selector": "[data-onb='settings']",
+        "label": "Tweak settings anytime",
+        "time": 14,
+        "hold": false,
+        "endTime": 18
+      }
+    ]
+  }
+]
