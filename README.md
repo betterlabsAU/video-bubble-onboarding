@@ -63,7 +63,7 @@ import "@/lib/video-bubble-onboarding/styles.css";
 ### Option B — install from Git
 
 ```bash
-npm install github:Jamahl/video-bubble-onboarding
+npm install github:betterlabsAU/video-bubble-onboarding
 # or: pnpm add / yarn add the same
 ```
 
