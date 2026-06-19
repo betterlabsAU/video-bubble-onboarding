@@ -17,6 +17,10 @@ click demo on each element. Drop it into any React app. **No backend at runtime.
 > separately as a reference app — see [Authoring](#authoring-tours). You do **not**
 > need it to run tours; you can hand-write the JSON.
 
+> 🛠 **Working on this codebase (or an AI agent forking/improving it)?** Start with
+> **[`OVERVIEW.md`](./OVERVIEW.md)** — the steering doc covering architecture, the
+> public contract, build, and where to change things.
+
 ---
 
 ## a) Where it lives & how it's actioned
